@@ -1,14 +1,16 @@
-//front controller
-
 <?php
 
-namespace BuyMeACoffeeClone
+namespace BuyMeACoffeeClone\Kernel;
 
 use Symfony\Component\Dotenv\Dotenv;
 
-final class Bootstrap{
+final class Bootstrap {
     public function __construct() {
-        $this->loadEnvironmentVariables();
+        $dotent =  new Dotenv();
+        $this->loadEnvironmentVariables($dotent);    }
+
+    public function run() : void {
+        
     }
 
     private function initialize() {
@@ -18,6 +20,5 @@ final class Bootstrap{
     private function loadEnvironmentVariables(Dotenv $dotenv): void {
         $dotenv->load(__DIR__. '/.env');
     }
-
 
 }
