@@ -6,21 +6,26 @@ namespace BuymeAcoffeeClone\Kernel\Http;
 
 class Router{
     private const URI_REGGEX = '#^uri$#';
-    private const SEPERATOR  = '@'
+    private const SEPARATOR  = '@';
 
-    public static function execute(string $uri) {
+    public static function execute(string $uri, string $method) {
 
         $uri = '/' . trim($uri, charaters: '/');
-        $uri = '/';
+        $url = '/';
         $url .= !empty($_GET['uri']) ? $_GET['uri'] : '';
 
-        if (preg_match(pattern '#^uri$#', $url, &matches: $params)){
+        if (preg_match( '#^uri$#', $url, $params)){
+            if (self::isController($method)) {
+                header(
+                    sprintf('Location: %s/%s',  $_ENV['SITE_URL'], $method)
+                );
 
+            }
         }
 
     }
 
-    private function isController() {
-        return strpos($method, needle: self::SEPARATOR) !== false
+    private function isController(string $method): bool {
+        return strpos($method, self::SEPARATOR) !== false
     }
 }
