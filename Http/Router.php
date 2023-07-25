@@ -30,7 +30,7 @@ class Router{
     }
     public static function execute(string $uri, string $method) {
 
-        $uri = '/' . trim($uri, charaters: '/');
+        $uri = '/' . trim($uri, characters: '/');
         $url = '/';
         $url .= !empty($_GET['uri']) ? $_GET['uri'] : '';
 
@@ -57,7 +57,7 @@ class Router{
                            $action = new \ReflectionMethod($className, $method);
                            if ($action->isPublic()) {
                                // Now, we perform the controller's action
-                               return $action->invokeArgs(new $className, self::getActionParameters())
+                               return $action->invokeArgs(new $className, self::getActionParameters($params));
                            }
                        }
                      } catch () {
@@ -75,7 +75,11 @@ class Router{
         return  self::$httpMethod !== null && $_SERVER['REQUEST_METHOD'] !== self::$httpMethod;
     }
 
-    private static function getActionParameters(array $param)
+    private static function getActionParameters(array $param) {
+        foreach ($params as $key => $value) {
+            $params[$key] = str_replace($value, '/', '');
+        }
+    }
     private function isController(string $method): bool {
         return strpos($method, self::SEPARATOR) !== false
     }
