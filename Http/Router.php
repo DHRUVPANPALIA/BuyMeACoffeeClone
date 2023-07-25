@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BuymeAcoffeeClone\Kernel\Http;
 
 use http\Exception\InvalidArgumentException;
+use ReflectionClass;
 
 class Router{
 
@@ -52,7 +53,13 @@ class Router{
 
                      try {
                          $reflection = new ReflectionClass();
-                       if (class_exists($className) && $className->)
+                       if (class_exists($className) && $className->hasMethod()){
+                           $action = new \ReflectionMethod($className, $method);
+                           if ($action->isPublic()) {
+                               // Now, we perform the controller's action
+                               return $action->invokeArgs(new $className, self::getActionParameters())
+                           }
+                       }
                      } catch () {
 
 
@@ -67,6 +74,8 @@ class Router{
     private static function isHttpMethodValid(): bool{
         return  self::$httpMethod !== null && $_SERVER['REQUEST_METHOD'] !== self::$httpMethod;
     }
+
+    private static function getActionParameters(array $param)
     private function isController(string $method): bool {
         return strpos($method, self::SEPARATOR) !== false
     }
