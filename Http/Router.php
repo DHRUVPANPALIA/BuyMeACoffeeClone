@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace BuymeAcoffeeClone\Kernel\Http;
 
+use http\Exception\InvalidArgumentException;
+
 class Router{
 
-    private const CONTROLLER_NAME
+    private const CONTROLLER_NAMESPACE = 'BuyMeACoffeeClone\Controller\\'
     private const URI_REGGEX = '#^uri$#';
     private const SEPARATOR  = '@';
 
@@ -39,10 +41,22 @@ class Router{
                 );
             } else {
                 if (!self::isHttpMethodValid()){
+                    throw  new InvalidArgumentException(
+                        sprintf('Invalid  "%s" HTTP Request', $_SERVER['REQUEST_METHOD'])
+                    );
                     exit('Invalid HTTP request');
                 } else {
                      $split =  explode(self::SEPARATOR, $method);
-                     $className = self::CONTROLLER_NAMESPACE . $split [0 ];
+                     $className = self::CONTROLLER_NAMESPACE . $split [0];
+                     $method = $split[1];
+
+                     try {
+                         $reflection = new ReflectionClass();
+                       if (class_exists($className) && $className->)
+                     } catch () {
+
+
+                     }
                 }
 
             }

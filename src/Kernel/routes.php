@@ -1,3 +1,3 @@
 <?php
 
-Router::get('MyController@action')
+Router::get('Hommepage@index')
