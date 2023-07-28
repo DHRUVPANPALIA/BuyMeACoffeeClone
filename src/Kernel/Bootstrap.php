@@ -10,7 +10,7 @@ final class Bootstrap {
         $this->loadEnvironmentVariables($dotent);    }
 
     public function run() : void {
-        
+        require dirname(__DIR__, 2) . '/src/Kernel/routes.php';
     }
 
     private function initialize() {
