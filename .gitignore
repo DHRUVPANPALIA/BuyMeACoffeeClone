@@ -1,5 +1,7 @@
 /vendor
 /.idea
 /.vscode
+/transcripts
+/downloads.txt
 *.log
 .env
