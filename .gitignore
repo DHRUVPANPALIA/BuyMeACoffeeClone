@@ -1,5 +1,11 @@
 /vendor
 /.idea
+<<<<<<< HEAD
 
+=======
+/.vscode
+/transcripts
+/downloads.txt
+>>>>>>> 61daf6c4fd4e3919758cba33f3ed4fda45b14857
 *.log
 .env

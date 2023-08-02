@@ -6,6 +6,7 @@ namespace BuymeAcoffeeClone\Kernel\Http;
 
 use http\Exception\InvalidArgumentException;
 use ReflectionClass;
+use ReflectionException;
 
 class Router{
 
@@ -19,7 +20,7 @@ class Router{
     private static ?string $httpMethod = null;
 
     public static function get(string $uri, string $classMethod = ''){
-        self::$httpMethod = self::METHOD_GET;
+        self::$httpMethod =  ::METHOD_GET;
         self::execute($uri, $classMethod );
     }
 
@@ -53,17 +54,23 @@ class Router{
 
                     try {
                         $reflection = new ReflectionClass();
+
+                        // Check if the class has method
                         if (class_exists($className) && $className->hasMethod()){
                             $action = new \ReflectionMethod($className, $method);
+
+                            // Make sure the requested action has "public" visibility
                             if ($action->isPublic()) {
                                 // Now, we perform the controller's action
                                 return $action->invokeArgs(new $className, self::getActionParameters($params));
                             }
                         }
-                    } catch () {
-
+                    } catch (ReflectionException $err) {
+                        // TODO Show the "Not Found" page
+                        echo $err->getMessage();
 
                     }
+                    // TODO Show the "NOT  FOUND" page here.
                 }
 
             }

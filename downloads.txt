@@ -1,4 +1,0 @@
-Vscode
-php
-composer
-git
