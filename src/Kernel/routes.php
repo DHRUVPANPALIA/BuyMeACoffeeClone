@@ -1,3 +1,9 @@
 <?php
+namespace BuyMeACoffeeClone;
 
-Router::get('Hommepage@index')
+use BuyMeACoffeeClone\Kernel\Http\Router;
+
+Router::get('/', 'Hommepage@index');
+
+Router::get('/', 'Hommepage@edit');
+
